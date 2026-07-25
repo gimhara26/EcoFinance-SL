@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reports | EcoFinance SL</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="bg-slate-100">
+    <div class="flex h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <div id="header"></div>
+
+        <main class="overflow-auto p-8 space-y-8">
+          <!-- Generate Report -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-2xl font-semibold mb-6">
+              Generate Sustainability Report
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div>
+                <label class="font-medium"> Reporting Year </label>
+
+                <input
+                  id="reportYear"
+                  type="number"
+                  value="2026"
+                  class="mt-2 w-full border rounded-lg p-3"
+                />
+              </div>
+
+              <div>
+                <label class="font-medium"> Reporting Month </label>
+
+                <select
+                  id="reportMonth"
+                  class="mt-2 w-full border rounded-lg p-3"
+                >
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="font-medium"> Report Type </label>
+
+                <select
+                  id="reportType"
+                  class="mt-2 w-full border rounded-lg p-3"
+                >
+                  <option value="sustainability">Sustainability Report</option>
+
+                  <option value="carbon">Carbon Report</option>
+
+                  <option value="esg">ESG Report</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-8 text-right">
+              <button
+                id="generateBtn"
+                class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg"
+              >
+                <i class="fa-solid fa-file-circle-plus mr-2"></i>
+
+                Generate Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Reports Table -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-2xl font-semibold mb-6">Available Reports</h2>
+
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b">
+                    <th class="text-left p-3">Report</th>
+                    <th class="text-left p-3">Type</th>
+                    <th class="text-left p-3">Period</th>
+                    <th class="text-left p-3">Generated</th>
+                    <th class="text-center p-3">Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody id="reportTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Report Summary -->
+
+          <div id="summaryCard" class="bg-white rounded-xl shadow p-6 hidden">
+            <h2 class="text-2xl font-semibold mb-6">Report Summary</h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+              <div>
+                <p class="text-gray-500">ESG Score</p>
+
+                <h2 id="summaryESG" class="text-3xl font-bold text-emerald-600">
+                  0
+                </h2>
+              </div>
+
+              <div>
+                <p class="text-gray-500">Carbon Emission</p>
+
+                <h2 id="summaryCarbon" class="text-3xl font-bold text-red-600">
+                  0
+                </h2>
+              </div>
+
+              <div>
+                <p class="text-gray-500">Rating</p>
+
+                <h2 id="summaryRating" class="text-3xl font-bold">-</h2>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="../js/layout.js"></script>
+
+    <script>
+      loadLayout("reports", "Reports", "..");
+    </script>
+
+    <script src="reports.js"></script>
+  </body>
+</html>
