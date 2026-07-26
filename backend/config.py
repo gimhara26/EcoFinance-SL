@@ -8,6 +8,12 @@ class Config:
 
     SECRET_KEY = os.getenv("SECRET_KEY")
 
+    OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+    OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL")
+
+    OPENROUTER_URL = os.getenv("OPENROUTER_URL")
+
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     JWT_TOKEN_LOCATION = ["headers"]
     JWT_HEADER_NAME = "Authorization"

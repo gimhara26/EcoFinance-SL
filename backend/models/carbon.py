@@ -13,11 +13,23 @@ class CarbonRecord(db.Model):
         nullable=False
     )
 
-    electricity_kwh = db.Column(db.Float)
-    fuel_liters = db.Column(db.Float)
-    transport_distance = db.Column(db.Float)
-    waste_kg = db.Column(db.Float)
-    total_emission = db.Column(db.Float)
+    business_input_id = db.Column(
+        db.Integer,
+        db.ForeignKey("business_inputs.id"),
+        nullable=False
+    )
+
+    business_input = db.relationship(
+        "BusinessInput",
+        backref="carbon_record",
+        lazy=True
+    )
+
+    scope1 = db.Column(db.Float, nullable=False)
+    scope2 = db.Column(db.Float, nullable=False)
+    scope3 = db.Column(db.Float, nullable=False)
+
+    total_emission = db.Column(db.Float, nullable=False)
 
     created_at = db.Column(
         db.DateTime,

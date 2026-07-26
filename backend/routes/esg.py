@@ -105,7 +105,7 @@ def generate_esg():
         )
 
         db.session.add(esg_input)
-        db.session.commit()
+        db.session.flush()
 
         # Calculate ESG #
 
@@ -119,6 +119,8 @@ def generate_esg():
         esg = ESGScore(
 
             company_id=company.id,
+            esg_input_id=esg_input.id,
+            carbon_record_id=carbon.id,
 
             environmental_score=result["environmental_score"],
             social_score=result["social_score"],
@@ -136,7 +138,6 @@ def generate_esg():
             overall_remark=result["overall_remark"],
 
             recommendations=result["recommendations"]
-
         )
 
         db.session.add(esg)
@@ -235,3 +236,81 @@ def latest_esg():
             "message": str(e)
 
         }), 500
+
+@esg_bp.route("/<int:id>", methods=["GET"])
+@jwt_required()
+def get_esg(id):
+
+    user_id = get_jwt_identity()
+
+    company = Company.query.filter_by(user_id=user_id).first()
+
+    if not company:
+        return jsonify({
+            "success": False,
+            "message": "Company not found"
+        }), 404
+
+    esg = ESGScore.query.filter_by(
+        id=id,
+        company_id=company.id
+    ).first()
+
+    if not esg:
+        return jsonify({
+            "success": False,
+            "message": "ESG record not found"
+        }), 404
+
+    return jsonify({
+        "success": True,
+        "data": {
+            "id": esg.id,
+            "environmental_score": esg.environmental_score,
+            "social_score": esg.social_score,
+            "governance_score": esg.governance_score,
+            "overall_score": esg.overall_score,
+            "environmental_status": esg.environmental_status,
+            "social_status": esg.social_status,
+            "governance_status": esg.governance_status,
+            "overall_status": esg.overall_status,
+            "recommendations": esg.recommendations,
+            "created_at": esg.created_at
+        }
+    }), 200
+
+@esg_bp.route("/history", methods=["GET"])
+@jwt_required()
+def esg_history():
+
+    user_id = get_jwt_identity()
+
+    company = Company.query.filter_by(user_id=user_id).first()
+
+    if not company:
+        return jsonify({
+            "success": False,
+            "message": "Company not found"
+        }), 404
+
+    scores = ESGScore.query.filter_by(
+        company_id=company.id
+    ).order_by(
+        ESGScore.created_at.desc()
+    ).all()
+
+    return jsonify({
+        "success": True,
+        "data": [
+            {
+                "id": score.id,
+                "overall_score": score.overall_score,
+                "overall_status": score.overall_status,
+                "environmental_score": score.environmental_score,
+                "social_score": score.social_score,
+                "governance_score": score.governance_score,
+                "created_at": score.created_at
+            }
+            for score in scores
+        ]
+    }), 200

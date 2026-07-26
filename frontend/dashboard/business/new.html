@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Business Data</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+
+    <link rel="stylesheet" href="business.css" />
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1">
+        <div id="header"></div>
+
+        <main class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h1 class="text-3xl font-bold">Business Data Entry</h1>
+              <p class="text-gray-500">Enter monthly operational data.</p>
+            </div>
+
+            <div class="flex gap-3">
+              <a
+                href="history.html"
+                class="px-5 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+              >
+                📋 History
+              </a>
+
+              <button id="saveBtn" class="btn-primary">
+                💾 Save Business Data
+              </button>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-6">
+            <!-- LEFT -->
+
+            <div class="lg:col-span-2 space-y-6">
+              <!-- Reporting -->
+
+              <div class="card">
+                <h2 class="section-title">Reporting Period</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label>Year</label>
+
+                    <input id="reporting_year" type="number" class="input" />
+                  </div>
+
+                  <div>
+                    <label>Month</label>
+
+                    <select id="reporting_month" class="input">
+                      <option value="1">January</option>
+                      <option value="2">February</option>
+                      <option value="3">March</option>
+                      <option value="4">April</option>
+                      <option value="5">May</option>
+                      <option value="6">June</option>
+                      <option value="7">July</option>
+                      <option value="8">August</option>
+                      <option value="9">September</option>
+                      <option value="10">October</option>
+                      <option value="11">November</option>
+                      <option value="12">December</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Electricity -->
+
+              <div class="card">
+                <h2 class="section-title">Electricity</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label>Grid Electricity (kWh)</label>
+
+                    <input
+                      id="grid_electricity_kwh"
+                      type="number"
+                      class="input"
+                    />
+                  </div>
+
+                  <div>
+                    <label>Renewable Electricity (kWh)</label>
+
+                    <input
+                      id="renewable_electricity_kwh"
+                      type="number"
+                      class="input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fuel -->
+
+              <div class="card">
+                <h2 class="section-title">Fuel Consumption</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <input
+                    id="diesel_liters"
+                    class="input"
+                    placeholder="Diesel (L)"
+                  />
+
+                  <input
+                    id="petrol_liters"
+                    class="input"
+                    placeholder="Petrol (L)"
+                  />
+
+                  <input id="lpg_kg" class="input" placeholder="LPG (kg)" />
+
+                  <input
+                    id="natural_gas_m3"
+                    class="input"
+                    placeholder="Natural Gas (m³)"
+                  />
+                </div>
+              </div>
+
+              <!-- Transportation -->
+
+              <div class="card">
+                <h2 class="section-title">Transportation</h2>
+
+                <div class="grid gap-4">
+                  <input
+                    id="business_travel_km"
+                    class="input"
+                    placeholder="Business Travel (km)"
+                  />
+
+                  <input
+                    id="employee_travel_km"
+                    class="input"
+                    placeholder="Employee Travel (km)"
+                  />
+
+                  <input
+                    id="freight_transport_km"
+                    class="input"
+                    placeholder="Freight Transport (km)"
+                  />
+                </div>
+              </div>
+
+              <!-- Waste -->
+
+              <div class="card">
+                <h2 class="section-title">Waste</h2>
+
+                <div class="grid gap-4">
+                  <input
+                    id="general_waste_kg"
+                    class="input"
+                    placeholder="General Waste (kg)"
+                  />
+
+                  <input
+                    id="recycled_waste_kg"
+                    class="input"
+                    placeholder="Recycled Waste (kg)"
+                  />
+
+                  <input
+                    id="hazardous_waste_kg"
+                    class="input"
+                    placeholder="Hazardous Waste (kg)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+
+            <div>
+              <div class="card sticky top-6">
+                <h2 class="text-xl font-bold mb-4">Carbon Summary</h2>
+
+                <div class="space-y-4">
+                  <div>
+                    <span>Total Carbon</span>
+
+                    <h1
+                      id="totalCarbon"
+                      class="text-4xl font-bold text-green-600"
+                    >
+                      0.00
+                    </h1>
+
+                    <small>tCO₂e</small>
+                  </div>
+
+                  <hr />
+
+                  <div>
+                    <p>Status</p>
+
+                    <span
+                      class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded"
+                    >
+                      Draft
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <div id="footer"></div>
+      </div>
+    </div>
+
+    <script type="module" src="business.js"></script>
+  </body>
+</html>

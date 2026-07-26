@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Generate Report</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+
+    <link rel="stylesheet" href="reports.css" />
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1">
+        <div id="header"></div>
+
+        <main class="p-8">
+          <div class="max-w-4xl mx-auto">
+            <div class="card">
+              <h1 class="text-3xl font-bold mb-2">Sustainability Report</h1>
+
+              <p class="text-gray-500 mb-8">
+                Generate the latest ESG Sustainability Report.
+              </p>
+
+              <div id="summary" class="grid md:grid-cols-2 gap-6"></div>
+
+              <div class="mt-8">
+                <button id="generateBtn" class="btn-primary">
+                  Generate Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <div id="footer"></div>
+      </div>
+    </div>
+
+    <script type="module" src="generate.js"></script>
+  </body>
+</html>

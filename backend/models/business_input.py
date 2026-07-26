@@ -2,7 +2,6 @@ from database import db
 
 
 class BusinessInput(db.Model):
-
     __tablename__ = "business_inputs"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,25 +12,26 @@ class BusinessInput(db.Model):
         nullable=False
     )
 
-    electricity_kwh = db.Column(
-        db.Float,
-        default=0
-    )
+    reporting_year = db.Column(db.Integer, nullable=False)
+    reporting_month = db.Column(db.Integer, nullable=False)
 
-    fuel_liters = db.Column(
-        db.Float,
-        default=0
-    )
+    grid_electricity_kwh = db.Column(db.Float, default=0)
+    renewable_electricity_kwh = db.Column(db.Float, default=0)
 
-    transport_distance = db.Column(
-        db.Float,
-        default=0
-    )
+    diesel_liters = db.Column(db.Float, default=0)
+    petrol_liters = db.Column(db.Float, default=0)
+    lpg_kg = db.Column(db.Float, default=0)
+    natural_gas_m3 = db.Column(db.Float, default=0)
 
-    waste_kg = db.Column(
-        db.Float,
-        default=0
-    )
+    business_travel_km = db.Column(db.Float, default=0)
+    employee_travel_km = db.Column(db.Float, default=0)
+    freight_transport_km = db.Column(db.Float, default=0)
+
+    general_waste_kg = db.Column(db.Float, default=0)
+    recycled_waste_kg = db.Column(db.Float, default=0)
+    hazardous_waste_kg = db.Column(db.Float, default=0)
+
+    total_carbon = db.Column(db.Float, default=0)
 
     created_at = db.Column(
         db.DateTime,

@@ -13,26 +13,39 @@ class ESGScore(db.Model):
         nullable=False
     )
 
-    # Scores #
+    esg_input_id = db.Column(
+        db.Integer,
+        db.ForeignKey("esg_inputs.id"),
+        nullable=False
+    )
+
+    carbon_record_id = db.Column(
+        db.Integer,
+        db.ForeignKey("carbon_records.id"),
+        nullable=False
+    )
+
+    # Scores
     environmental_score = db.Column(db.Float, nullable=False)
     social_score = db.Column(db.Float, nullable=False)
     governance_score = db.Column(db.Float, nullable=False)
     overall_score = db.Column(db.Float, nullable=False)
 
-    # Status #
+    # Status
     environmental_status = db.Column(db.String(50))
     social_status = db.Column(db.String(50))
     governance_status = db.Column(db.String(50))
     overall_status = db.Column(db.String(50))
 
-    # Remarks #
+    # Remarks
     environmental_remark = db.Column(db.Text)
     social_remark = db.Column(db.Text)
     governance_remark = db.Column(db.Text)
     overall_remark = db.Column(db.Text)
 
-    # Recommendations #
+    # Recommendations
     recommendations = db.Column(db.Text)
+
     created_at = db.Column(
         db.DateTime,
         server_default=db.func.now()

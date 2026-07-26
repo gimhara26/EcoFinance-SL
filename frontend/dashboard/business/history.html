@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Business History</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+    <link rel="stylesheet" href="business.css" />
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1">
+        <div id="header"></div>
+
+        <main class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h1 class="text-3xl font-bold">Business History</h1>
+
+              <p class="text-gray-500">View submitted business records.</p>
+            </div>
+
+            <a href="new.html" class="btn-primary"> + New Business Data </a>
+          </div>
+
+          <div class="card">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b">
+                    <th class="text-left p-3">Year</th>
+
+                    <th class="text-left p-3">Month</th>
+
+                    <th class="text-right p-3">Grid (kWh)</th>
+
+                    <th class="text-right p-3">Diesel (L)</th>
+
+                    <th class="text-right p-3">Carbon</th>
+
+                    <th class="text-center p-3">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody id="historyTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+
+        <div id="footer"></div>
+      </div>
+    </div>
+
+    <script type="module" src="history.js"></script>
+  </body>
+</html>

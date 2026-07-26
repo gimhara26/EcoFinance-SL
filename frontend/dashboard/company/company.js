@@ -1,62 +1,64 @@
-const API = "http://localhost:5000/api/company";
+import api from "../../assets/js/api.js";
+import { initLayout } from "../../assets/js/layout.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadCompany();
+await initLayout({
+  title: "Company",
+
+  basePath: "../../",
 });
 
+loadCompany();
+
+document.getElementById("companyForm").addEventListener("submit", saveCompany);
+
 async function loadCompany() {
-  try {
-    const response = await fetch(API, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+  const response = await api.get("/company/");
 
-    const company = await response.json();
-
-    company_name.value = company.company_name || "";
-    registration_no.value = company.registration_no || "";
-    business_sector.value = company.business_sector || "";
-    website.value = company.website || "";
-    address.value = company.address || "";
-    province.value = company.province || "";
-    district.value = company.district || "";
-    contact_no.value = company.contact_no || "";
-    email.value = company.email || "";
-  } catch (e) {
-    console.log(e);
+  if (!response.success) {
+    throw new Error("Unable to load company.");
   }
+
+  const company = response.company;
+
+  company_name.value = company.company_name || "";
+
+  registration_no.value = company.registration_no || "";
+
+  business_sector.value = company.business_sector || "";
+
+  website.value = company.website || "";
+
+  contact_no.value = company.contact_no || "";
+
+  province.value = company.province || "";
+
+  district.value = company.district || "";
+
+  address.value = company.address || "";
 }
 
-saveBtn.addEventListener("click", updateCompany);
+async function saveCompany(e) {
+  e.preventDefault();
 
-async function updateCompany() {
   const body = {
     company_name: company_name.value,
+
     registration_no: registration_no.value,
+
     business_sector: business_sector.value,
+
     website: website.value,
-    address: address.value,
-    province: province.value,
-    district: district.value,
+
     contact_no: contact_no.value,
+
+    province: province.value,
+
+    district: district.value,
+
+    address: address.value,
   };
 
-  const response = await fetch(API, {
-    method: "PUT",
+  const response = await api.put("/company/", body);
 
-    headers: {
-      "Content-Type": "application/json",
-
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-
-    body: JSON.stringify(body),
-  });
-
-  if (response.ok) {
-    alert("Company information updated successfully.");
-  } else {
-    alert("Unable to update company information.");
-  }
+  alert(response.message);
 }

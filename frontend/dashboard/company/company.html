@@ -4,202 +4,80 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Company Profile | EcoFinance SL</title>
-
-    <!-- Tailwind -->
+    <title>Company</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font Awesome -->
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="../../assets/css/common.css" />
 
     <link rel="stylesheet" href="company.css" />
   </head>
 
-  <body class="bg-slate-100">
-    <div class="flex h-screen">
-      <!-- Sidebar -->
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
 
-      <aside class="w-64 bg-slate-900 text-white">
-        <div
-          class="h-20 flex items-center justify-center border-b border-slate-700"
-        >
-          <div class="text-center">
-            <i class="fa-solid fa-leaf text-4xl text-emerald-400"></i>
-
-            <h1 class="font-bold text-xl mt-2">EcoFinance SL</h1>
-          </div>
-        </div>
-
-        <nav class="p-5 space-y-2">
-          <a href="../dashboard.html" class="menu-link">
-            <i class="fa-solid fa-house"></i>
-
-            Dashboard
-          </a>
-
-          <a href="company.html" class="menu-link active">
-            <i class="fa-solid fa-building"></i>
-
-            Company
-          </a>
-
-          <a href="../business/input.html" class="menu-link">
-            <i class="fa-solid fa-industry"></i>
-
-            Business Input
-          </a>
-
-          <a href="../esg/input.html" class="menu-link">
-            <i class="fa-solid fa-seedling"></i>
-
-            ESG Input
-          </a>
-
-          <a href="../reports/reports.html" class="menu-link">
-            <i class="fa-solid fa-file-lines"></i>
-
-            Reports
-          </a>
-
-          <a href="../profile/profile.html" class="menu-link">
-            <i class="fa-solid fa-user"></i>
-
-            Profile
-          </a>
-        </nav>
-      </aside>
-
-      <!-- Main -->
-
-      <div class="flex-1 overflow-auto">
-        <!-- Header -->
-
-        <header
-          class="bg-white shadow h-20 flex items-center justify-between px-8"
-        >
-          <div>
-            <h1 class="text-2xl font-bold">Company Profile</h1>
-
-            <p class="text-gray-500">Dashboard / Company</p>
-          </div>
-
-          <div>
-            <button class="bg-red-500 text-white px-5 py-2 rounded-lg">
-              Logout
-            </button>
-          </div>
-        </header>
-
-        <!-- Content -->
+      <div class="flex-1">
+        <div id="header"></div>
 
         <main class="p-8">
-          <!-- Basic Information -->
-
           <div class="card">
-            <h2 class="card-title">Basic Information</h2>
+            <h2 class="text-2xl font-bold mb-6">Company Information</h2>
 
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="label"> Company Name </label>
-
-                <input id="company_name" class="input" />
-              </div>
-
-              <div>
-                <label class="label"> Registration Number </label>
-
-                <input id="registration_no" class="input" />
-              </div>
-
-              <div>
-                <label class="label"> Business Sector </label>
-
-                <input id="business_sector" class="input" />
-              </div>
-
-              <div>
-                <label class="label"> Website </label>
-
-                <input id="website" class="input" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Address -->
-
-          <div class="card mt-8">
-            <h2 class="card-title">Location</h2>
-
-            <div class="space-y-6">
-              <div>
-                <label class="label"> Address </label>
-
-                <textarea rows="4" id="address" class="input"></textarea>
-              </div>
-
+            <form id="companyForm">
               <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label class="label"> Province </label>
-
-                  <select id="province" class="input">
-                    <option>Select Province</option>
-                  </select>
+                  <label>Company Name</label>
+                  <input id="company_name" class="input" />
                 </div>
 
                 <div>
-                  <label class="label"> District </label>
+                  <label>Registration No</label>
+                  <input id="registration_no" class="input" />
+                </div>
 
-                  <select id="district" class="input">
-                    <option>Select District</option>
-                  </select>
+                <div>
+                  <label>Business Sector</label>
+                  <input id="business_sector" class="input" />
+                </div>
+
+                <div>
+                  <label>Website</label>
+                  <input id="website" class="input" />
+                </div>
+
+                <div>
+                  <label>Contact Number</label>
+                  <input id="contact_no" class="input" />
+                </div>
+
+                <div>
+                  <label>Province</label>
+                  <input id="province" class="input" />
+                </div>
+
+                <div>
+                  <label>District</label>
+                  <input id="district" class="input" />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label>Address</label>
+                  <textarea id="address" rows="3" class="input"> </textarea>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Contact -->
-
-          <div class="card mt-8">
-            <h2 class="card-title">Contact</h2>
-
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="label"> Contact Number </label>
-
-                <input id="contact_no" class="input" />
+              <div class="mt-8">
+                <button id="saveBtn" class="btn-primary">Save Company</button>
               </div>
-
-              <div>
-                <label class="label"> Email </label>
-
-                <input id="email" class="input" disabled />
-              </div>
-            </div>
-          </div>
-
-          <!-- Buttons -->
-
-          <div class="mt-8 flex justify-end gap-4">
-            <button class="bg-gray-300 px-6 py-3 rounded-lg">Cancel</button>
-
-            <button
-              id="saveBtn"
-              class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg"
-            >
-              <i class="fa-solid fa-floppy-disk mr-2"></i>
-
-              Save Changes
-            </button>
+            </form>
           </div>
         </main>
+
+        <div id="footer"></div>
       </div>
     </div>
 
-    <script src="company.js"></script>
+    <script type="module" src="company.js"></script>
   </body>
 </html>

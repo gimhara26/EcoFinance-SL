@@ -1,0 +1,11 @@
+input {
+  transition: 0.3s;
+}
+
+input:focus {
+  outline: none;
+
+  border-color: #10b981;
+
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}

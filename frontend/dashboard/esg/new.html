@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ESG Assessment</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+
+    <link rel="stylesheet" href="esg.css" />
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1">
+        <div id="header"></div>
+
+        <main class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h1 class="text-3xl font-bold">ESG Assessment</h1>
+
+              <p class="text-gray-500">
+                Enter ESG indicators to generate the ESG score.
+              </p>
+            </div>
+
+            <div class="flex gap-3">
+              <a
+                href="history.html"
+                class="px-5 py-3 rounded-lg border border-gray-300 bg-white hover:bg-gray-100"
+              >
+                📋 History
+              </a>
+
+              <button id="generateBtn" class="btn-primary">
+                🌱 Generate ESG Score
+              </button>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-6">
+            <!-- LEFT -->
+
+            <div class="lg:col-span-2 space-y-6">
+              <!-- Environmental -->
+
+              <div class="card">
+                <h2 class="section-title">Environmental</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label>Renewable Energy (%)</label>
+
+                    <input id="renewable_energy" type="number" class="input" />
+                  </div>
+
+                  <div>
+                    <label>Water Consumption</label>
+
+                    <input id="water_consumption" type="number" class="input" />
+                  </div>
+
+                  <div>
+                    <label>Recycling Rate (%)</label>
+
+                    <input id="recycling_rate" type="number" class="input" />
+                  </div>
+
+                  <div class="flex items-center mt-8">
+                    <input id="environmental_policy" type="checkbox" />
+
+                    <label class="ml-2"> Environmental Policy </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social -->
+
+              <div class="card">
+                <h2 class="section-title">Social</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <input
+                    id="employee_satisfaction"
+                    class="input"
+                    type="number"
+                    placeholder="Employee Satisfaction (%)"
+                  />
+
+                  <input
+                    id="training_hours"
+                    class="input"
+                    type="number"
+                    placeholder="Training Hours"
+                  />
+
+                  <input
+                    id="gender_diversity"
+                    class="input"
+                    type="number"
+                    placeholder="Gender Diversity (%)"
+                  />
+
+                  <div class="flex items-center">
+                    <input id="community_projects" type="checkbox" />
+
+                    <label class="ml-2"> Community Projects </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Governance -->
+
+              <div class="card">
+                <h2 class="section-title">Governance</h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <input
+                    id="board_meetings"
+                    class="input"
+                    type="number"
+                    placeholder="Board Meetings"
+                  />
+
+                  <div class="flex items-center">
+                    <input id="ethics_policy" type="checkbox" />
+
+                    <label class="ml-2"> Ethics Policy </label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input id="compliance" type="checkbox" />
+
+                    <label class="ml-2"> Compliance </label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input id="risk_management" type="checkbox" />
+
+                    <label class="ml-2"> Risk Management </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+
+            <div>
+              <div class="card sticky top-6">
+                <h2 class="text-xl font-bold mb-4">ESG Result</h2>
+
+                <div class="space-y-5">
+                  <div>
+                    <p class="text-gray-500">Overall Score</p>
+
+                    <h1
+                      id="overall_score"
+                      class="text-5xl font-bold text-green-600"
+                    >
+                      --
+                    </h1>
+
+                    <p id="overall_status">Waiting...</p>
+                  </div>
+
+                  <hr />
+
+                  <div>
+                    <strong>Environmental</strong>
+
+                    <p id="environment_score">--</p>
+                  </div>
+
+                  <div>
+                    <strong>Social</strong>
+
+                    <p id="social_score">--</p>
+                  </div>
+
+                  <div>
+                    <strong>Governance</strong>
+
+                    <p id="governance_score">--</p>
+                  </div>
+
+                  <hr />
+
+                  <div>
+                    <strong> Recommendation </strong>
+
+                    <p id="recommendation" class="text-sm text-gray-600">
+                      Generate ESG score first.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <div id="footer"></div>
+      </div>
+    </div>
+
+    <script type="module" src="esg.js"></script>
+  </body>
+</html>

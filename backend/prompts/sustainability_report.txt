@@ -1,0 +1,27 @@
+Generate a comprehensive sustainability report using the supplied business information.
+
+The report must include the following sections:
+
+# Executive Summary
+
+# Environmental Performance
+
+# Social Performance
+
+# Governance Performance
+
+# Carbon Emissions Analysis
+
+# Strengths
+
+# Areas for Improvement
+
+# Recommendations
+
+# Conclusion
+
+Write approximately 800–1200 words.
+
+Use Markdown formatting.
+
+Do not fabricate any values.

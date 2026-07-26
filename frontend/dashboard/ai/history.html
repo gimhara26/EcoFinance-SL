@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AI Sustainability Reports</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- Sidebar -->
+    <div id="sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="ml-64 min-h-screen flex flex-col">
+      <!-- Header -->
+      <div id="header"></div>
+
+      <!-- Page Content -->
+      <main class="flex-1 p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+              🤖 AI Sustainability Reports
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+              Generate AI-powered sustainability reports based on your ESG and
+              Carbon data.
+            </p>
+          </div>
+
+          <button
+            id="generateBtn"
+            class="bg-emerald-600 hover:bg-emerald-700 transition text-white font-semibold px-6 py-3 rounded-lg shadow"
+          >
+            Generate AI Report
+          </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-gray-500 text-sm">Total Reports</p>
+            <h2 id="totalReports" class="text-3xl font-bold mt-2">0</h2>
+          </div>
+
+          <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-gray-500 text-sm">Total Tokens</p>
+            <h2 id="totalTokens" class="text-3xl font-bold mt-2 text-blue-600">
+              0
+            </h2>
+          </div>
+
+          <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-gray-500 text-sm">Latest AI Model</p>
+            <h2 id="lastModel" class="text-lg font-semibold mt-2">-</h2>
+          </div>
+
+          <div class="bg-white rounded-xl shadow p-5">
+            <p class="text-gray-500 text-sm">Estimated Cost</p>
+            <h2 id="totalCost" class="text-3xl font-bold mt-2 text-emerald-600">
+              $0.0000
+            </h2>
+          </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+          <div class="px-6 py-4 border-b">
+            <h3 class="text-lg font-semibold">AI Report History</h3>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full">
+              <thead class="bg-gray-50">
+                <tr class="text-left text-gray-600 text-sm uppercase">
+                  <th class="px-6 py-4">ID</th>
+                  <th class="px-6 py-4">Model</th>
+                  <th class="px-6 py-4">Status</th>
+                  <th class="px-6 py-4">Tokens</th>
+                  <th class="px-6 py-4">Cost</th>
+                  <th class="px-6 py-4">Generated On</th>
+                  <th class="px-6 py-4 text-center">Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="historyTable" class="divide-y divide-gray-200"></tbody>
+            </table>
+          </div>
+
+          <div id="emptyState" class="hidden py-16 text-center">
+            <div class="text-6xl mb-4">🤖</div>
+
+            <h3 class="text-xl font-semibold text-gray-700">
+              No AI Reports Found
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+              Generate your first AI Sustainability Report to get started.
+            </p>
+          </div>
+        </div>
+
+        <!-- Your Table -->
+
+        <!-- Empty State -->
+        <!-- View Report Modal -->
+        <div
+          id="reportModal"
+          class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+        >
+          <div class="bg-white w-11/12 max-w-5xl rounded-xl shadow-xl">
+            <div class="flex justify-between items-center border-b p-5">
+              <h2 class="text-xl font-bold">AI Sustainability Report</h2>
+
+              <button
+                id="closeModal"
+                class="text-2xl text-gray-500 hover:text-red-500"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div
+              id="reportContent"
+              class="prose prose-lg max-w-none p-8 max-h-[75vh] overflow-y-auto"
+            ></div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <div id="footer"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="./history.js"></script>
+  </body>
+</html>

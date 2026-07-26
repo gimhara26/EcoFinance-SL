@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ESG History</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+
+    <link rel="stylesheet" href="esg.css" />
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex min-h-screen">
+      <div id="sidebar"></div>
+
+      <div class="flex-1">
+        <div id="header"></div>
+
+        <main class="p-8">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h1 class="text-3xl font-bold">ESG History</h1>
+
+              <p class="text-gray-500">Previous ESG assessments</p>
+            </div>
+
+            <a href="new.html" class="btn-primary"> + New Assessment </a>
+          </div>
+
+          <div class="card overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b">
+                  <th class="p-3 text-left">Date</th>
+
+                  <th class="p-3 text-center">Environmental</th>
+
+                  <th class="p-3 text-center">Social</th>
+
+                  <th class="p-3 text-center">Governance</th>
+
+                  <th class="p-3 text-center">Overall</th>
+
+                  <th class="p-3 text-center">Status</th>
+
+                  <th class="p-3 text-center">Action</th>
+                </tr>
+              </thead>
+
+              <tbody id="historyTable"></tbody>
+            </table>
+          </div>
+          <div
+            id="detailModal"
+            class="fixed inset-0 bg-black/40 hidden items-center justify-center"
+          >
+            <div class="bg-white rounded-xl w-full max-w-2xl p-6">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">ESG Assessment</h2>
+
+                <button onclick="closeModal()">✕</button>
+              </div>
+
+              <div id="modalBody"></div>
+            </div>
+          </div>
+        </main>
+
+        <div id="footer"></div>
+      </div>
+    </div>
+
+    <script type="module" src="history.js"></script>
+  </body>
+</html>
