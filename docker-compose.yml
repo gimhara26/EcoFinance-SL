@@ -1,0 +1,81 @@
+services:
+
+  db:
+    image: mariadb:10.11
+    container_name: ecofinance-db
+    restart: unless-stopped
+
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/ecofinance_sl.sql:/docker-entrypoint-initdb.d/ecofinance_sl.sql:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -p$${MARIADB_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+    networks:
+      - ecofinance
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: ecofinance-backend
+    restart: unless-stopped
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    expose:
+      - "5000"
+
+    networks:
+      - ecofinance
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: ecofinance-caddy
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frontend:/srv/frontend:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+    depends_on:
+      - backend
+
+    networks:
+      - ecofinance
+
+networks:
+  ecofinance:
+
+volumes:
+  db_data:
+  caddy_data:
+  caddy_config:

@@ -1,164 +1,351 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <title>ESG Input</title>
+<head>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body class="bg-slate-100">
-    <div class="flex h-screen">
-      <div id="sidebar"></div>
+  <title>ESG Input | EcoFinance SL</title>
 
-      <div class="flex-1 flex flex-col overflow-hidden">
-        <div id="header"></div>
 
-        <main class="overflow-auto p-8 space-y-8">
-          <!-- Environmental -->
+  <!-- Tailwind CSS -->
 
-          <div class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold text-green-700 mb-6">
-              <i class="fa-solid fa-leaf mr-2"></i>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-              Environmental
-            </h2>
 
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label>Renewable Energy (%)</label>
+  <!-- Font Awesome -->
 
-                <input
-                  id="renewableEnergy"
-                  type="number"
-                  class="w-full border rounded-lg p-3 mt-2"
-                />
-              </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
-              <div>
-                <label>Water Consumption (m³)</label>
+</head>
 
-                <input
-                  id="waterConsumption"
-                  type="number"
-                  class="w-full border rounded-lg p-3 mt-2"
-                />
-              </div>
 
-              <div>
-                <label>Waste Recycling (%)</label>
+<body class="bg-slate-100">
 
-                <input
-                  id="wasteRecycling"
-                  type="number"
-                  class="w-full border rounded-lg p-3 mt-2"
-                />
-              </div>
+
+  <!-- Main Layout -->
+
+  <div class="flex h-screen">
+
+
+    <!-- Dynamic Sidebar -->
+
+    <div id="sidebar" class="h-full flex-shrink-0"></div>
+
+
+    <!-- Right Side -->
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+
+      <!-- Dynamic Header -->
+
+      <div id="header"></div>
+
+
+      <!-- Main Content -->
+
+      <main class="flex-1 overflow-auto p-8 space-y-8">
+
+
+        <!-- =========================
+             Environmental
+             ========================= -->
+
+        <div class="bg-white rounded-xl shadow p-6">
+
+          <h2 class="text-xl font-semibold text-green-700 mb-6">
+
+            <i class="fa-solid fa-leaf mr-2"></i>
+
+            Environmental
+
+          </h2>
+
+
+          <div class="grid md:grid-cols-2 gap-6">
+
+
+            <!-- Renewable Energy -->
+
+            <div>
+
+              <label for="renewableEnergy" class="block font-medium">
+                Renewable Energy (%)
+              </label>
+
+              <input id="renewableEnergy" type="number" min="0" max="100" class="w-full border rounded-lg p-3 mt-2" />
+
             </div>
+
+
+            <!-- Water -->
+
+            <div>
+
+              <label for="waterConsumption" class="block font-medium">
+                Water Consumption (m³)
+              </label>
+
+              <input id="waterConsumption" type="number" min="0" class="w-full border rounded-lg p-3 mt-2" />
+
+            </div>
+
+
+            <!-- Waste Recycling -->
+
+            <div>
+
+              <label for="wasteRecycling" class="block font-medium">
+                Waste Recycling (%)
+              </label>
+
+              <input id="wasteRecycling" type="number" min="0" max="100" class="w-full border rounded-lg p-3 mt-2" />
+
+            </div>
+
           </div>
 
-          <!-- Social -->
+        </div>
 
-          <div class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold text-blue-700 mb-6">
-              <i class="fa-solid fa-users mr-2"></i>
 
-              Social
-            </h2>
+        <!-- =========================
+             Social
+             ========================= -->
 
-            <div class="grid md:grid-cols-2 gap-6">
-              <input
-                id="employees"
-                placeholder="Employee Count"
-                class="border rounded-lg p-3"
-              />
+        <div class="bg-white rounded-xl shadow p-6">
 
-              <input
-                id="femaleEmployees"
-                placeholder="Female Employees"
-                class="border rounded-lg p-3"
-              />
+          <h2 class="text-xl font-semibold text-blue-700 mb-6">
 
-              <input
-                id="trainingHours"
-                placeholder="Training Hours"
-                class="border rounded-lg p-3"
-              />
+            <i class="fa-solid fa-users mr-2"></i>
 
-              <input
-                id="communityInvestment"
-                placeholder="Community Investment"
-                class="border rounded-lg p-3"
-              />
+            Social
+
+          </h2>
+
+
+          <div class="grid md:grid-cols-2 gap-6">
+
+
+            <!-- Employees -->
+
+            <div>
+
+              <label for="employees" class="block font-medium">
+                Employee Count
+              </label>
+
+              <input id="employees" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Employee Count" />
+
             </div>
+
+
+            <!-- Female Employees -->
+
+            <div>
+
+              <label for="femaleEmployees" class="block font-medium">
+                Female Employees
+              </label>
+
+              <input id="femaleEmployees" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Female Employees" />
+
+            </div>
+
+
+            <!-- Training Hours -->
+
+            <div>
+
+              <label for="trainingHours" class="block font-medium">
+                Training Hours
+              </label>
+
+              <input id="trainingHours" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Training Hours" />
+
+            </div>
+
+
+            <!-- Community Investment -->
+
+            <div>
+
+              <label for="communityInvestment" class="block font-medium">
+                Community Investment
+              </label>
+
+              <input id="communityInvestment" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Community Investment" />
+
+            </div>
+
           </div>
 
-          <!-- Governance -->
+        </div>
 
-          <div class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold text-purple-700 mb-6">
-              <i class="fa-solid fa-scale-balanced mr-2"></i>
 
-              Governance
-            </h2>
+        <!-- =========================
+             Governance
+             ========================= -->
 
-            <div class="grid md:grid-cols-2 gap-6">
-              <input
-                id="boardMembers"
-                placeholder="Board Members"
-                class="border rounded-lg p-3"
-              />
+        <div class="bg-white rounded-xl shadow p-6">
 
-              <input
-                id="independentDirectors"
-                placeholder="Independent Directors"
-                class="border rounded-lg p-3"
-              />
+          <h2 class="text-xl font-semibold text-purple-700 mb-6">
 
-              <select id="ethicsPolicy" class="border rounded-lg p-3">
-                <option value="true">Ethics Policy - Yes</option>
-                <option value="false">Ethics Policy - No</option>
+            <i class="fa-solid fa-scale-balanced mr-2"></i>
+
+            Governance
+
+          </h2>
+
+
+          <div class="grid md:grid-cols-2 gap-6">
+
+
+            <!-- Board Members -->
+
+            <div>
+
+              <label for="boardMembers" class="block font-medium">
+                Board Members
+              </label>
+
+              <input id="boardMembers" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Board Members" />
+
+            </div>
+
+
+            <!-- Independent Directors -->
+
+            <div>
+
+              <label for="independentDirectors" class="block font-medium">
+                Independent Directors
+              </label>
+
+              <input id="independentDirectors" type="number" min="0" class="w-full border rounded-lg p-3 mt-2"
+                placeholder="Independent Directors" />
+
+            </div>
+
+
+            <!-- Ethics Policy -->
+
+            <div>
+
+              <label for="ethicsPolicy" class="block font-medium">
+                Ethics Policy
+              </label>
+
+              <select id="ethicsPolicy" class="w-full border rounded-lg p-3 mt-2">
+
+                <option value="true">
+                  Yes
+                </option>
+
+                <option value="false">
+                  No
+                </option>
+
               </select>
 
-              <select id="antiCorruption" class="border rounded-lg p-3">
-                <option value="true">Anti-Corruption Policy - Yes</option>
-                <option value="false">Anti-Corruption Policy - No</option>
-              </select>
             </div>
+
+
+            <!-- Anti-Corruption -->
+
+            <div>
+
+              <label for="antiCorruption" class="block font-medium">
+                Anti-Corruption Policy
+              </label>
+
+              <select id="antiCorruption" class="w-full border rounded-lg p-3 mt-2">
+
+                <option value="true">
+                  Yes
+                </option>
+
+                <option value="false">
+                  No
+                </option>
+
+              </select>
+
+            </div>
+
           </div>
 
-          <div class="flex justify-end gap-4">
-            <button
-              id="calculateBtn"
-              class="bg-blue-600 text-white px-6 py-3 rounded-lg"
-            >
-              Calculate ESG Score
-            </button>
+        </div>
 
-            <button
-              id="saveBtn"
-              class="bg-emerald-600 text-white px-6 py-3 rounded-lg"
-            >
-              Save ESG Data
-            </button>
-          </div>
-        </main>
-      </div>
+
+        <!-- =========================
+             Buttons
+             ========================= -->
+
+        <div class="flex justify-end gap-4">
+
+
+          <!-- Calculate -->
+
+          <button id="calculateBtn" type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+
+            <i class="fa-solid fa-calculator mr-2"></i>
+
+            Calculate ESG Score
+
+          </button>
+
+
+          <!-- Save -->
+
+          <button id="saveBtn" type="button"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg">
+
+            <i class="fa-solid fa-floppy-disk mr-2"></i>
+
+            Save ESG Data
+
+          </button>
+
+        </div>
+
+
+      </main>
+
     </div>
 
-    <script src="../js/layout.js"></script>
+  </div>
 
-    <script>
-      loadLayout("esg", "ESG Input", "..");
-    </script>
 
-    <script src="esg.js"></script>
-  </body>
+  <!-- Shared Layout -->
+
+  <script src="/dashboard/components/js/layout.js"></script>
+
+
+  <!-- Load Sidebar + Header -->
+
+  <script>
+
+    loadLayout(
+      "esg",
+      "ESG Input"
+    );
+
+  </script>
+
+
+  <!-- ESG JavaScript -->
+
+  <script src="esg.js"></script>
+
+
+</body>
+
 </html>

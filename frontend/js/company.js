@@ -1,6 +1,6 @@
 // Company Management
 
-const API_URL = "http://127.0.0.1:5000/api/company";
+const API_URL = "/api/company";
 
 const token = localStorage.getItem("token");
 
