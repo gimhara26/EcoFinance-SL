@@ -1,0 +1,100 @@
+/* =========================================
+   Business Input Page
+   ========================================= */
+
+
+/* Main page */
+
+body {
+    margin: 0;
+}
+
+
+/* Sidebar menu */
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px 16px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* Sidebar hover */
+
+.menu-item:hover {
+    background-color: #1e293b;
+}
+
+
+/* Active menu */
+
+.menu-item.active {
+    background-color: #059669;
+}
+
+
+/* Sidebar icons */
+
+.menu-item i {
+    width: 20px;
+
+    text-align: center;
+}
+
+
+/* Form labels */
+
+label {
+    display: block;
+
+    color: #0f172a;
+
+    font-weight: 500;
+}
+
+
+/* Form inputs */
+
+input,
+select {
+    outline: none;
+}
+
+
+/* Input focus */
+
+input:focus,
+select:focus {
+    border-color: #10b981;
+
+    box-shadow:
+        0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+
+/* Buttons */
+
+button {
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
+}
+
+
+button:active {
+    transform: scale(0.98);
+}

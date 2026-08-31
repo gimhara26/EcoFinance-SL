@@ -1,4 +1,5 @@
-const API = "/api/reports";
+const API =
+  `${window.location.origin}/api/reports/`;
 
 const token = localStorage.getItem("token");
 

@@ -1,4 +1,4 @@
-const API = "/api/company";
+const API = `${window.location.origin}/api/company/`;
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCompany();

@@ -1,205 +1,301 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Company Profile | EcoFinance SL</title>
+<head>
 
-    <!-- Tailwind -->
+  <meta charset="UTF-8" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Font Awesome -->
+  <title>Company Profile | EcoFinance SL</title>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
 
-    <link rel="stylesheet" href="company.css" />
-  </head>
+  <!-- Tailwind CSS -->
 
-  <body class="bg-slate-100">
-    <div class="flex h-screen">
-      <!-- Sidebar -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-      <aside class="w-64 bg-slate-900 text-white">
-        <div
-          class="h-20 flex items-center justify-center border-b border-slate-700"
-        >
-          <div class="text-center">
-            <i class="fa-solid fa-leaf text-4xl text-emerald-400"></i>
 
-            <h1 class="font-bold text-xl mt-2">EcoFinance SL</h1>
+  <!-- Font Awesome -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+
+  <!-- Company CSS -->
+
+  <link rel="stylesheet" href="company.css" />
+
+</head>
+
+
+<body class="bg-slate-100">
+
+
+  <!-- Main Layout -->
+
+  <div class="flex h-screen">
+
+
+    <!-- Dynamic Sidebar -->
+
+    <div id="sidebar" class="h-full flex-shrink-0"></div>
+
+
+    <!-- Right Side -->
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+
+      <!-- Dynamic Header -->
+
+      <div id="header"></div>
+
+
+      <!-- Main Content -->
+
+      <main class="flex-1 overflow-auto p-8">
+
+
+        <!-- Basic Information -->
+
+        <div class="card">
+
+          <h2 class="card-title">
+            Basic Information
+          </h2>
+
+
+          <div class="grid md:grid-cols-2 gap-6">
+
+
+            <!-- Company Name -->
+
+            <div>
+
+              <label for="company_name" class="label">
+                Company Name
+              </label>
+
+              <input id="company_name" class="input" type="text" />
+
+            </div>
+
+
+            <!-- Registration Number -->
+
+            <div>
+
+              <label for="registration_no" class="label">
+                Registration Number
+              </label>
+
+              <input id="registration_no" class="input" type="text" />
+
+            </div>
+
+
+            <!-- Business Sector -->
+
+            <div>
+
+              <label for="business_sector" class="label">
+                Business Sector
+              </label>
+
+              <input id="business_sector" class="input" type="text" />
+
+            </div>
+
+
+            <!-- Website -->
+
+            <div>
+
+              <label for="website" class="label">
+                Website
+              </label>
+
+              <input id="website" class="input" type="url" />
+
+            </div>
+
           </div>
+
         </div>
 
-        <nav class="p-5 space-y-2">
-          <a href="../dashboard.html" class="menu-link">
-            <i class="fa-solid fa-house"></i>
 
-            Dashboard
-          </a>
+        <!-- Location -->
 
-          <a href="company.html" class="menu-link active">
-            <i class="fa-solid fa-building"></i>
+        <div class="card mt-8">
 
-            Company
-          </a>
+          <h2 class="card-title">
+            Location
+          </h2>
 
-          <a href="../business/input.html" class="menu-link">
-            <i class="fa-solid fa-industry"></i>
 
-            Business Input
-          </a>
+          <div class="space-y-6">
 
-          <a href="../esg/input.html" class="menu-link">
-            <i class="fa-solid fa-seedling"></i>
 
-            ESG Input
-          </a>
+            <!-- Address -->
 
-          <a href="../reports/reports.html" class="menu-link">
-            <i class="fa-solid fa-file-lines"></i>
+            <div>
 
-            Reports
-          </a>
+              <label for="address" class="label">
+                Address
+              </label>
 
-          <a href="../profile/profile.html" class="menu-link">
-            <i class="fa-solid fa-user"></i>
+              <textarea id="address" rows="4" class="input"></textarea>
 
-            Profile
-          </a>
-        </nav>
-      </aside>
+            </div>
 
-      <!-- Main -->
 
-      <div class="flex-1 overflow-auto">
-        <!-- Header -->
-
-        <header
-          class="bg-white shadow h-20 flex items-center justify-between px-8"
-        >
-          <div>
-            <h1 class="text-2xl font-bold">Company Profile</h1>
-
-            <p class="text-gray-500">Dashboard / Company</p>
-          </div>
-
-          <div>
-            <button class="bg-red-500 text-white px-5 py-2 rounded-lg">
-              Logout
-            </button>
-          </div>
-        </header>
-
-        <!-- Content -->
-
-        <main class="p-8">
-          <!-- Basic Information -->
-
-          <div class="card">
-            <h2 class="card-title">Basic Information</h2>
+            <!-- Province / District -->
 
             <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="label"> Company Name </label>
 
-                <input id="company_name" class="input" />
-              </div>
+
+              <!-- Province -->
 
               <div>
-                <label class="label"> Registration Number </label>
 
-                <input id="registration_no" class="input" />
+                <label for="province" class="label">
+                  Province
+                </label>
+
+                <select id="province" class="input">
+
+                  <option value="">
+                    Select Province
+                  </option>
+
+                </select>
+
               </div>
+
+
+              <!-- District -->
 
               <div>
-                <label class="label"> Business Sector </label>
 
-                <input id="business_sector" class="input" />
+                <label for="district" class="label">
+                  District
+                </label>
+
+                <select id="district" class="input">
+
+                  <option value="">
+                    Select District
+                  </option>
+
+                </select>
+
               </div>
 
-              <div>
-                <label class="label"> Website </label>
-
-                <input id="website" class="input" />
-              </div>
             </div>
+
           </div>
 
-          <!-- Address -->
+        </div>
 
-          <div class="card mt-8">
-            <h2 class="card-title">Location</h2>
 
-            <div class="space-y-6">
-              <div>
-                <label class="label"> Address </label>
+        <!-- Contact -->
 
-                <textarea rows="4" id="address" class="input"></textarea>
-              </div>
+        <div class="card mt-8">
 
-              <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label class="label"> Province </label>
+          <h2 class="card-title">
+            Contact
+          </h2>
 
-                  <select id="province" class="input">
-                    <option>Select Province</option>
-                  </select>
-                </div>
 
-                <div>
-                  <label class="label"> District </label>
+          <div class="grid md:grid-cols-2 gap-6">
 
-                  <select id="district" class="input">
-                    <option>Select District</option>
-                  </select>
-                </div>
-              </div>
+
+            <!-- Contact Number -->
+
+            <div>
+
+              <label for="contact_no" class="label">
+                Contact Number
+              </label>
+
+              <input id="contact_no" type="text" class="input" />
+
             </div>
-          </div>
 
-          <!-- Contact -->
 
-          <div class="card mt-8">
-            <h2 class="card-title">Contact</h2>
+            <!-- Email -->
 
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="label"> Contact Number </label>
+            <div>
 
-                <input id="contact_no" class="input" />
-              </div>
+              <label for="email" class="label">
+                Email
+              </label>
 
-              <div>
-                <label class="label"> Email </label>
+              <input id="email" type="email" class="input" disabled />
 
-                <input id="email" class="input" disabled />
-              </div>
             </div>
+
           </div>
 
-          <!-- Buttons -->
+        </div>
 
-          <div class="mt-8 flex justify-end gap-4">
-            <button class="bg-gray-300 px-6 py-3 rounded-lg">Cancel</button>
 
-            <button
-              id="saveBtn"
-              class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg"
-            >
-              <i class="fa-solid fa-floppy-disk mr-2"></i>
+        <!-- Buttons -->
 
-              Save Changes
-            </button>
-          </div>
-        </main>
-      </div>
+        <div class="mt-8 flex justify-end gap-4">
+
+
+          <!-- Cancel -->
+
+          <button id="cancelBtn" type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-3 rounded-lg">
+
+            Cancel
+
+          </button>
+
+
+          <!-- Save -->
+
+          <button id="saveBtn" type="button"
+            class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-lg">
+
+            <i class="fa-solid fa-floppy-disk mr-2"></i>
+
+            Save Changes
+
+          </button>
+
+        </div>
+
+
+      </main>
+
     </div>
 
-    <script src="company.js"></script>
-  </body>
+  </div>
+
+
+  <!-- Shared Layout -->
+
+  <script src="/dashboard/components/js/layout.js"></script>
+
+
+  <!-- Load Sidebar + Header -->
+
+  <script>
+
+    loadLayout(
+      "company",
+      "Company Profile"
+    );
+
+  </script>
+
+
+  <!-- Company JavaScript -->
+
+  <script src="company.js"></script>
+
+
+</body>
+
 </html>

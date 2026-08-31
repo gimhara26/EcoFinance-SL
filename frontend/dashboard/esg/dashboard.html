@@ -1,79 +1,211 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <title>ESG Dashboard</title>
+<head>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <body class="bg-slate-100">
-    <div class="flex h-screen">
-      <div id="sidebar"></div>
+  <title>ESG Dashboard | EcoFinance SL</title>
 
-      <div class="flex-1 flex flex-col">
-        <div id="header"></div>
 
-        <main class="p-8 overflow-auto">
-          <div class="grid lg:grid-cols-4 gap-6">
-            <div class="bg-white rounded-xl shadow p-6 text-center">
-              <p>Overall ESG</p>
+  <!-- Tailwind CSS -->
 
-              <h1
-                id="overallScore"
-                class="text-5xl font-bold text-emerald-600 mt-4"
-              >
-                0
-              </h1>
-            </div>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-            <div class="bg-white rounded-xl shadow p-6">
+
+  <!-- Font Awesome -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+
+  <!-- Chart.js -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body class="bg-slate-100">
+
+
+  <!-- Main Layout -->
+
+  <div class="flex h-screen">
+
+
+    <!-- Dynamic Sidebar -->
+
+    <div id="sidebar" class="h-full flex-shrink-0"></div>
+
+
+    <!-- Right Side -->
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+
+
+      <!-- Dynamic Header -->
+
+      <div id="header"></div>
+
+
+      <!-- Main Content -->
+
+      <main class="flex-1 overflow-auto p-8">
+
+
+        <!-- ESG Score Cards -->
+
+        <div class="grid lg:grid-cols-4 gap-6">
+
+
+          <!-- Overall ESG -->
+
+          <div class="bg-white rounded-xl shadow p-6 text-center">
+
+            <p class="text-gray-500">
+              Overall ESG
+            </p>
+
+            <h1 id="overallScore" class="text-5xl font-bold text-emerald-600 mt-4">
+              0
+            </h1>
+
+          </div>
+
+
+          <!-- Environmental -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+
+            <p class="text-gray-500">
               Environmental
+            </p>
 
-              <h2 id="environmentScore" class="text-3xl mt-4 font-bold">0</h2>
-            </div>
+            <h2 id="environmentScore" class="text-3xl mt-4 font-bold">
+              0
+            </h2>
 
-            <div class="bg-white rounded-xl shadow p-6">
+          </div>
+
+
+          <!-- Social -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+
+            <p class="text-gray-500">
               Social
+            </p>
 
-              <h2 id="socialScore" class="text-3xl mt-4 font-bold">0</h2>
-            </div>
+            <h2 id="socialScore" class="text-3xl mt-4 font-bold">
+              0
+            </h2>
 
-            <div class="bg-white rounded-xl shadow p-6">
+          </div>
+
+
+          <!-- Governance -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+
+            <p class="text-gray-500">
               Governance
+            </p>
 
-              <h2 id="governanceScore" class="text-3xl mt-4 font-bold">0</h2>
-            </div>
+            <h2 id="governanceScore" class="text-3xl mt-4 font-bold">
+              0
+            </h2>
+
           </div>
 
-          <div class="grid lg:grid-cols-2 gap-6 mt-8">
-            <div class="bg-white rounded-xl shadow p-6">
+        </div>
+
+
+        <!-- Charts -->
+
+        <div class="grid lg:grid-cols-2 gap-6 mt-8">
+
+
+          <!-- Radar Chart -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+
+            <h2 class="text-xl font-semibold mb-4">
+              ESG Performance
+            </h2>
+
+            <div class="relative h-80">
+
               <canvas id="radarChart"></canvas>
+
             </div>
 
-            <div class="bg-white rounded-xl shadow p-6">
+          </div>
+
+
+          <!-- Trend Chart -->
+
+          <div class="bg-white rounded-xl shadow p-6">
+
+            <h2 class="text-xl font-semibold mb-4">
+              ESG Score Trend
+            </h2>
+
+            <div class="relative h-80">
+
               <canvas id="trendChart"></canvas>
+
             </div>
+
           </div>
 
-          <div class="bg-white rounded-xl shadow p-6 mt-8">
-            <h2 class="text-xl font-semibold mb-4">Recommendations</h2>
+        </div>
 
-            <ul id="recommendations" class="list-disc pl-6 space-y-2"></ul>
-          </div>
-        </main>
-      </div>
+
+        <!-- Recommendations -->
+
+        <div class="bg-white rounded-xl shadow p-6 mt-8">
+
+          <h2 class="text-xl font-semibold mb-4">
+            Recommendations
+          </h2>
+
+
+          <ul id="recommendations" class="list-disc pl-6 space-y-2"></ul>
+
+        </div>
+
+
+      </main>
+
     </div>
 
-    <script src="../js/layout.js"></script>
+  </div>
 
-    <script>
-      loadLayout("esg", "ESG Dashboard", "..");
-    </script>
 
-    <script src="esg.js"></script>
-  </body>
+  <!-- Shared Layout -->
+
+  <script src="/dashboard/components/js/layout.js"></script>
+
+
+  <!-- Load Sidebar + Header -->
+
+  <script>
+
+    loadLayout(
+      "esg-dashboard",
+      "ESG Dashboard"
+    );
+
+  </script>
+
+
+  <!-- ESG Dashboard JavaScript -->
+
+  <script src="esg.js"></script>
+
+
+</body>
+
 </html>
