@@ -1,6 +1,6 @@
 // ESG Dashboard
 
-const API_URL = "http://127.0.0.1:5000/api/esg/latest";
+const API_URL = "/api/esg/latest";
 
 const token = localStorage.getItem("token");
 

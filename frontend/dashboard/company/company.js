@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/company";
+const API = "/api/company";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCompany();

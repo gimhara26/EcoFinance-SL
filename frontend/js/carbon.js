@@ -1,6 +1,6 @@
 // Carbon Input
 
-const API_URL = "http://127.0.0.1:5000/api/carbon";
+const API_URL = "/api/carbon";
 
 const token = localStorage.getItem("token");
 

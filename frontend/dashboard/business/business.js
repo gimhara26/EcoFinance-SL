@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/company/business-input";
+const API = "/api/company/business-input";
 
 const token = localStorage.getItem("token");
 
@@ -11,7 +11,7 @@ document.getElementById("saveBtn").addEventListener("click", saveBusinessData);
 async function calculateCarbon() {
   const body = getFormData();
 
-  const response = await fetch("http://localhost:5000/api/carbon/calculate", {
+  const response = await fetch("/api/carbon/calculate", {
     method: "POST",
 
     headers: {

@@ -1,0 +1,13 @@
+ecofinancesl.online, www.ecofinancesl.online {
+
+    encode gzip
+
+    handle /api/* {
+        reverse_proxy backend:5000
+    }
+
+    handle {
+        root * /srv/frontend
+        file_server
+    }
+}
