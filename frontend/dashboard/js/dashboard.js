@@ -1,679 +1,722 @@
-<!doctype html>
-<html lang="en">
+const API_URL = "/api";
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+// Load Dashboard
 
-  <title>EcoFinance SL Dashboard</title>
+async function loadDashboard() {
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    const token = localStorage.getItem("token");
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-  />
-
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
+    // Check login
+    if (!token) {
+        window.location.href = "../login.html";
+        return;
     }
 
-    .sidebar-link {
-      transition: all 0.2s ease;
+    try {
+
+        console.log("Loading dashboard...");
+
+        const response = await fetch(
+            `${API_URL}/dashboard/`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+
+        // Handle HTTP errors
+
+        if (!response.ok) {
+
+            if (response.status === 401) {
+
+                console.error("Authentication failed.");
+
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+
+                window.location.href = "../login.html";
+
+                return;
+            }
+
+            throw new Error(
+                `HTTP Error: ${response.status}`
+            );
+        }
+
+
+        const result = await response.json();
+
+        console.log("Dashboard API Response:", result);
+
+
+        // Check API success
+
+        if (!result.success) {
+
+            throw new Error(
+                result.message || "Dashboard request failed"
+            );
+        }
+
+
+        const data = result.data;
+
+        console.log("Dashboard Data:", data);
+
+
+        // Company
+
+        const companyName =
+            document.getElementById("companyName");
+
+        if (companyName) {
+
+            companyName.textContent =
+                data.company_name || "No Company";
+
+        }
+
+
+        // ESG Score
+
+        const esgScore =
+            document.getElementById("esgScore");
+
+        if (esgScore) {
+
+            esgScore.textContent =
+                Number(
+                    data.average_esg_score || 0
+                ).toFixed(1);
+
+        }
+
+
+        // Carbon Emission
+
+        const carbonEmission =
+            document.getElementById("carbonEmission");
+
+        if (carbonEmission) {
+
+            carbonEmission.textContent =
+                Number(
+                    data.total_emission || 0
+                ).toFixed(2) + " kg";
+
+        }
+
+
+  
+        // Reports
+
+
+        const reportCount =
+            document.getElementById("reportCount");
+
+        if (reportCount) {
+
+            reportCount.textContent =
+                data.total_reports || 0;
+
+        }
+
+
+    
+        // Header Company Name
+
+        const headerCompanyName =
+            document.getElementById(
+                "headerCompanyName"
+            );
+
+        if (headerCompanyName) {
+
+            headerCompanyName.textContent =
+                data.company_name ||
+                "Company Account";
+
+        }
+
+
+        // User Initial==
+
+        const userInitial =
+            document.getElementById(
+                "userInitial"
+            );
+
+        const storedUser =
+            localStorage.getItem("user");
+
+
+        if (userInitial && storedUser) {
+
+            try {
+
+                const user =
+                    JSON.parse(storedUser);
+
+
+                const name =
+                    user.full_name ||
+                    user.name ||
+                    user.username ||
+                    user.email ||
+                    "";
+
+
+                if (name) {
+
+                    userInitial.textContent =
+                        name.charAt(0).toUpperCase();
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to read stored user:",
+                    error
+                );
+
+            }
+
+        }
+
+
+    
+        // Charts
+
+        await loadCharts(token);
+
+
+        // Recent Activity
+
+        await loadRecentActivity(token);
+
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard loading failed:",
+            error
+        );
+
+
+        const errorBox =
+            document.getElementById(
+                "dashboardError"
+            );
+
+
+        if (errorBox) {
+
+            errorBox.textContent =
+                "Unable to load dashboard data. Please check that the Flask server is running.";
+
+            errorBox.classList.remove("hidden");
+
+        }
+
+
+        const companyName =
+            document.getElementById("companyName");
+
+        if (companyName) {
+            companyName.textContent =
+                "Unable to load";
+        }
+
+
+        const esgScore =
+            document.getElementById("esgScore");
+
+        if (esgScore) {
+            esgScore.textContent = "0";
+        }
+
+
+        const carbonEmission =
+            document.getElementById(
+                "carbonEmission"
+            );
+
+        if (carbonEmission) {
+            carbonEmission.textContent = "0 kg";
+        }
+
+
+        const reportCount =
+            document.getElementById(
+                "reportCount"
+            );
+
+        if (reportCount) {
+            reportCount.textContent = "0";
+        }
+
     }
 
-    .sidebar-link:hover {
-      background-color: #1e293b;
+}
+
+
+// Load Charts
+
+async function loadCharts(token) {
+
+    try {
+
+        
+
+        const carbonResponse =
+            await fetch(
+                `${API_URL}/carbon/`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        let carbonData = [];
+
+        if (carbonResponse.ok) {
+
+            const carbonResult =
+                await carbonResponse.json();
+
+            console.log(
+                "Carbon API:",
+                carbonResult
+            );
+
+
+            if (carbonResult.success) {
+
+                carbonData =
+                    carbonResult.data || [];
+
+            }
+
+        }
+
+
+
+        const esgResponse =
+            await fetch(
+                `${API_URL}/esg/`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        let esgData = [];
+
+        if (esgResponse.ok) {
+
+            const esgResult =
+                await esgResponse.json();
+
+            console.log(
+                "ESG API:",
+                esgResult
+            );
+
+
+            if (esgResult.success) {
+
+                esgData =
+                    esgResult.data || [];
+
+            }
+
+        }
+
+
+        createCarbonChart(carbonData);
+
+        createESGChart(esgData);
+
+
+    } catch (error) {
+
+        console.error(
+            "Chart loading failed:",
+            error
+        );
+
     }
 
-    .sidebar-link.active {
-      background-color: #059669;
+}
+
+// Carbon Chart
+
+
+function createCarbonChart(records) {
+
+    const canvas =
+        document.getElementById(
+            "carbonChart"
+        );
+
+
+    if (!canvas) {
+        return;
     }
 
-    .stat-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    const labels = records.map(
+        item => {
+
+            const date =
+                item.created_at ||
+                item.date ||
+                item.recorded_at;
+
+            if (!date) {
+                return "";
+            }
+
+            return new Date(date)
+                .toLocaleDateString();
+
+        }
+    );
+
+
+    const values = records.map(
+        item =>
+            Number(
+                item.total_emission ||
+                item.emission ||
+                item.carbon_emission ||
+                0
+            )
+    );
+
+
+    new Chart(
+        canvas,
+        {
+            type: "line",
+
+            data: {
+                labels: labels,
+
+                datasets: [
+                    {
+                        label:
+                            "Carbon Emission (kg)",
+
+                        data: values,
+
+                        borderWidth: 2,
+
+                        tension: 0.3,
+
+                        fill: false
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        }
+    );
+
+}
+
+
+
+// ESG Chart
+
+function createESGChart(records) {
+
+    const canvas =
+        document.getElementById(
+            "esgChart"
+        );
+
+
+    if (!canvas) {
+        return;
     }
 
-    .stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+    const labels = records.map(
+        item => {
+
+            const date =
+                item.created_at ||
+                item.date ||
+                item.recorded_at;
+
+            if (!date) {
+                return "";
+            }
+
+            return new Date(date)
+                .toLocaleDateString();
+
+        }
+    );
+
+
+    const values = records.map(
+        item =>
+            Number(
+                item.score ||
+                item.esg_score ||
+                item.average_score ||
+                0
+            )
+    );
+
+
+    new Chart(
+        canvas,
+        {
+            type: "line",
+
+            data: {
+                labels: labels,
+
+                datasets: [
+                    {
+                        label:
+                            "ESG Score",
+
+                        data: values,
+
+                        borderWidth: 2,
+
+                        tension: 0.3,
+
+                        fill: false
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+                    y: {
+                        beginAtZero: true,
+
+                        max: 100
+                    }
+                }
+            }
+        }
+    );
+
+}
+
+
+// Recent Activity
+
+async function loadRecentActivity(token) {
+
+    const table =
+        document.getElementById(
+            "activityTable"
+        );
+
+
+    if (!table) {
+        return;
     }
 
-    .loading {
-      color: #94a3b8;
-    }
-  </style>
-</head>
 
-<body class="bg-slate-100">
+    try {
 
-  <div class="flex h-screen">
+   
 
-    <aside
-      id="sidebar"
-      class="w-64 bg-slate-900 text-white flex flex-col shadow-xl"
-    >
+        const response =
+            await fetch(
+                `${API_URL}/carbon/`,
+                {
+                    method: "GET",
 
-      <!-- Logo -->
+                    headers: {
+                        "Content-Type":
+                            "application/json",
 
-      <div
-        class="h-20 flex items-center justify-center border-b border-slate-700"
-      >
-        <div class="text-center">
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
 
-          <i
-            class="fa-solid fa-leaf text-4xl text-emerald-400 mb-2"
-          ></i>
 
-          <h1 class="font-bold text-xl">
-            EcoFinance SL
-          </h1>
+        if (!response.ok) {
 
-        </div>
-      </div>
+            throw new Error(
+                `HTTP ${response.status}`
+            );
 
+        }
 
-      <!-- Navigation -->
 
-      <nav class="flex-1 px-4 py-6 space-y-2">
+        const result =
+            await response.json();
 
-        <!-- Dashboard -->
 
-        <a
-          href="/dashboard/dashboard.html"
-          class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-house w-5"></i>
-          <span>Dashboard</span>
-        </a>
+        const records =
+            result.data || [];
 
 
-        <!-- Company -->
+        if (!records.length) {
 
-        <a
-          href="/dashboard/company/company.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-building w-5"></i>
-          <span>Company</span>
-        </a>
-
-
-        <!-- Business Input -->
-
-        <a
-          href="/dashboard/business/input.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-industry w-5"></i>
-          <span>Business Input</span>
-        </a>
-
-
-        <!-- ESG Input -->
-
-        <a
-          href="/dashboard/esg/input.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-seedling w-5"></i>
-          <span>ESG Input</span>
-        </a>
-
-
-        <!-- ESG Dashboard -->
-
-        <a
-          href="/dashboard/esg/dashboard.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-chart-line w-5"></i>
-          <span>ESG Dashboard</span>
-        </a>
-
-
-        <!-- Reports -->
-
-        <a
-          href="/dashboard/reports/reports.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-file-lines w-5"></i>
-          <span>Reports</span>
-        </a>
-
-
-        <!-- Profile -->
-
-        <a
-          href="/dashboard/profile/profile.html"
-          class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg"
-        >
-          <i class="fa-solid fa-user w-5"></i>
-          <span>Profile</span>
-        </a>
-
-      </nav>
-
-
-      <!-- Logout -->
-
-      <div class="p-4 border-t border-slate-700">
-
-        <button
-          id="logoutBtn"
-          type="button"
-          class="w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg transition"
-        >
-
-          <i class="fa-solid fa-right-from-bracket mr-2"></i>
-
-          Logout
-
-        </button>
-
-      </div>
-
-    </aside>
-
-
-    <div class="flex-1 flex flex-col overflow-hidden">
-
-      <header
-        class="h-20 bg-white shadow flex items-center justify-between px-8"
-      >
-
-        <!-- Header left -->
-
-        <div>
-
-          <h2 class="text-3xl font-bold text-slate-800">
-            Dashboard
-          </h2>
-
-          <p class="text-gray-500">
-            Welcome back
-          </p>
-
-        </div>
-
-
-        <!-- Header right -->
-
-        <div class="flex items-center gap-4">
-
-          <div class="text-right">
-
-            <h3
-              id="headerCompanyName"
-              class="font-semibold text-slate-800"
-            >
-              Loading...
-            </h3>
-
-            <p class="text-gray-500 text-sm">
-              Company Account
-            </p>
-
-          </div>
-
-
-          <div
-            id="userInitial"
-            class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center text-lg font-bold"
-          >
-            U
-          </div>
-
-        </div>
-
-      </header>
-
-
-      <main class="flex-1 overflow-y-auto p-8">
-
-        <div
-          class="bg-gradient-to-r from-emerald-600 to-green-500 rounded-2xl text-white p-8 shadow"
-        >
-
-          <h1 class="text-4xl font-bold">
-            Welcome to EcoFinance SL
-          </h1>
-
-          <p class="mt-3 text-lg">
-            Manage your ESG information, carbon emissions,
-            sustainability reports and company profile from one place.
-          </p>
-
-        </div>
-
-
-
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8"
-        >
-
-
-          <!-- COMPANY CARD -->
-
-          <div
-            class="stat-card bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center">
-
-              <div>
-
-                <p class="text-gray-500">
-                  Company
-                </p>
-
-                <h3
-                  id="companyName"
-                  class="text-xl font-bold mt-2 loading"
-                >
-                  Loading...
-                </h3>
-
-              </div>
-
-
-              <div class="bg-blue-100 p-4 rounded-full">
-
-                <i
-                  class="fa-solid fa-building text-blue-600 text-2xl"
-                ></i>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- ESG CARD -->
-
-          <div
-            class="stat-card bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center">
-
-              <div>
-
-                <p class="text-gray-500">
-                  ESG Score
-                </p>
-
-                <h3
-                  id="esgScore"
-                  class="text-3xl font-bold text-emerald-600 mt-2"
-                >
-                  0
-                </h3>
-
-              </div>
-
-
-              <div class="bg-emerald-100 p-4 rounded-full">
-
-                <i
-                  class="fa-solid fa-seedling text-emerald-600 text-2xl"
-                ></i>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- CARBON CARD -->
-
-          <div
-            class="stat-card bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center">
-
-              <div>
-
-                <p class="text-gray-500">
-                  Carbon Emission
-                </p>
-
-                <h3
-                  id="carbonEmission"
-                  class="text-3xl font-bold text-red-500 mt-2"
-                >
-                  0 kg
-                </h3>
-
-              </div>
-
-
-              <div class="bg-red-100 p-4 rounded-full">
-
-                <i
-                  class="fa-solid fa-cloud text-red-500 text-2xl"
-                ></i>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- REPORT CARD -->
-
-          <div
-            class="stat-card bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center">
-
-              <div>
-
-                <p class="text-gray-500">
-                  Reports
-                </p>
-
-                <h3
-                  id="reportCount"
-                  class="text-3xl font-bold text-indigo-600 mt-2"
-                >
-                  0
-                </h3>
-
-              </div>
-
-
-              <div class="bg-indigo-100 p-4 rounded-full">
-
-                <i
-                  class="fa-solid fa-file-lines text-indigo-600 text-2xl"
-                ></i>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- CHARTS -->
-
-        <div
-          class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8"
-        >
-
-
-          <!-- CARBON CHART -->
-
-
-          <div
-            class="bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center mb-5">
-
-              <h2 class="text-xl font-semibold">
-                Carbon Emission Trend
-              </h2>
-
-              <span
-                class="text-sm text-gray-500"
-              >
-                Recent Records
-              </span>
-
-            </div>
-
-            <div class="relative h-72">
-
-              <canvas id="carbonChart"></canvas>
-
-            </div>
-
-          </div>
-
-
-          <!-- ESG CHART -->
-
-          <div
-            class="bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center mb-5">
-
-              <h2 class="text-xl font-semibold">
-                ESG Score Trend
-              </h2>
-
-              <span
-                class="text-sm text-gray-500"
-              >
-                Recent Scores
-              </span>
-
-            </div>
-
-            <div class="relative h-72">
-
-              <canvas id="esgChart"></canvas>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK ACTIONS + RECENT ACTIVITY -->
-
-        <div
-          class="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8"
-        >
-
-
-          <!-- QUICK ACTIONS -->
-
-          <div
-            class="bg-white rounded-xl shadow p-6"
-          >
-
-            <h2 class="text-xl font-semibold mb-5">
-              Quick Actions
-            </h2>
-
-
-            <div class="grid grid-cols-2 gap-4">
-
-
-              <!-- Company -->
-
-              <a
-                href="/dashboard/company/company.html"
-                class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg p-4 text-center transition"
-              >
-
-                <i class="fa-solid fa-building mb-2 block text-xl"></i>
-
-                Company
-
-              </a>
-
-
-              <!-- Business -->
-
-              <a
-                href="/dashboard/business/input.html"
-                class="bg-green-600 hover:bg-green-700 text-white rounded-lg p-4 text-center transition"
-              >
-
-                <i class="fa-solid fa-industry mb-2 block text-xl"></i>
-
-                Business Input
-
-              </a>
-
-
-              <!-- ESG -->
-
-              <a
-                href="/dashboard/esg/input.html"
-                class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg p-4 text-center transition"
-              >
-
-                <i class="fa-solid fa-seedling mb-2 block text-xl"></i>
-
-                ESG Input
-
-              </a>
-
-
-              <!-- Reports -->
-
-              <a
-                href="/dashboard/reports/reports.html"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg p-4 text-center transition"
-              >
-
-                <i class="fa-solid fa-file-lines mb-2 block text-xl"></i>
-
-                Reports
-
-              </a>
-
-            </div>
-
-          </div>
-
-
-          <!-- RECENT ACTIVITY -->
-       
-          <div
-            class="xl:col-span-2 bg-white rounded-xl shadow p-6"
-          >
-
-            <div class="flex justify-between items-center mb-5">
-
-              <h2 class="text-xl font-semibold">
-                Recent Activity
-              </h2>
-
-              <span
-                id="activityStatus"
-                class="text-sm text-gray-500"
-              >
-                Loading...
-              </span>
-
-            </div>
-
-
-            <div class="overflow-x-auto">
-
-              <table class="w-full">
-
-                <thead>
-
-                  <tr class="border-b">
-
-                    <th class="text-left py-3">
-                      Date
-                    </th>
-
-                    <th class="text-left">
-                      Activity
-                    </th>
-
-                    <th class="text-left">
-                      Status
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-
-                <tbody id="activityTable">
-
-                  <tr>
-
+            table.innerHTML = `
+                <tr>
                     <td
-                      colspan="3"
-                      class="text-center py-8 text-gray-400"
+                        colspan="3"
+                        class="text-center py-8 text-gray-400"
                     >
-
-                      Loading activity...
-
+                        No recent activity
                     </td>
+                </tr>
+            `;
 
-                  </tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-          </div>
-
-        </div>
+            return;
+        }
 
 
-        
-        <!-- ERROR MESSAGE -->
-        
 
-        <div
-          id="dashboardError"
-          class="hidden mt-6 bg-red-50 border border-red-200 text-red-700 rounded-lg p-4"
-        >
-        </div>
+        const latest =
+            records.slice(0, 5);
 
 
-      </main>
+        table.innerHTML =
+            latest.map(
+                item => {
 
-    </div>
-
-  </div>
-
-  <!-- DASHBOARD JAVASCRIPT -->
-
-  <script type="module" src="./js/dashboard.js"></script>
+                    const dateValue =
+                        item.created_at ||
+                        item.date ||
+                        item.recorded_at;
 
 
-  <!-- LOGOUT -->
+                    const date =
+                        dateValue
+                            ? new Date(
+                                dateValue
+                              ).toLocaleDateString(
+                                "en-GB",
+                                {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric"
+                                }
+                              )
+                            : "-";
 
-  <script type="module">
 
-    import { getToken } from "./js/api.js";
+                    return `
+                        <tr class="border-b">
 
-    const logoutBtn =
-      document.getElementById("logoutBtn");
+                            <td class="py-3">
+                                ${date}
+                            </td>
 
-    logoutBtn.addEventListener("click", function () {
+                            <td>
+                                Business Data Submitted
+                            </td>
 
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+                            <td>
 
-      window.location.href = "../login.html";
+                                <span
+                                    class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm"
+                                >
+                                    Completed
+                                </span>
 
-    });
+                            </td>
 
-  </script>
+                        </tr>
+                    `;
 
-</body>
+                }
+            ).join("");
 
-</html>
+
+        const activityStatus =
+            document.getElementById(
+                "activityStatus"
+            );
+
+
+        if (activityStatus) {
+
+            activityStatus.textContent =
+                `${latest.length} recent record(s)`;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Activity loading failed:",
+            error
+        );
+
+
+        table.innerHTML = `
+            <tr>
+                <td
+                    colspan="3"
+                    class="text-center py-8 text-gray-400"
+                >
+                    Unable to load activity
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+// Start Dashboard
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadDashboard();
+
+    }
+);
