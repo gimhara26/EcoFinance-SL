@@ -5,19 +5,29 @@ export function getToken() {
 }
 
 export function getUser() {
-  return JSON.parse(localStorage.getItem("user"));
+  const user = localStorage.getItem("user");
+
+  try {
+    return user ? JSON.parse(user) : null;
+  } catch (error) {
+    console.error("Invalid stored user:", error);
+    return null;
+  }
 }
 
 export async function apiFetch(url, options = {}) {
   const token = getToken();
 
   const headers = {
-    Authorization: `Bearer ${token}`,
     "Content-Type": "application/json",
     ...(options.headers || {}),
   };
 
-  return fetch(API_URL + url, {
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return fetch(`${API_URL}${url}`, {
     ...options,
     headers,
   });
