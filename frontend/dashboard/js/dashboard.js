@@ -1,5 +1,4 @@
-const API_URL = "http://127.0.0.1:5000/api";
-
+const API = `${window.location.origin}/api`;
 // Load Dashboard
 
 async function loadDashboard() {
@@ -17,7 +16,7 @@ async function loadDashboard() {
         console.log("Loading dashboard...");
 
         const response = await fetch(
-            `${API_URL}/dashboard/`,
+            `${API}/dashboard/`,
             {
                 method: "GET",
                 headers: {
@@ -26,7 +25,6 @@ async function loadDashboard() {
                 }
             }
         );
-
 
         // Handle HTTP errors
 
@@ -49,11 +47,9 @@ async function loadDashboard() {
             );
         }
 
-
         const result = await response.json();
 
         console.log("Dashboard API Response:", result);
-
 
         // Check API success
 
@@ -64,11 +60,9 @@ async function loadDashboard() {
             );
         }
 
-
         const data = result.data;
 
         console.log("Dashboard Data:", data);
-
 
         // Company
 
@@ -79,9 +73,7 @@ async function loadDashboard() {
 
             companyName.textContent =
                 data.company_name || "No Company";
-
         }
-
 
         // ESG Score
 
@@ -94,9 +86,7 @@ async function loadDashboard() {
                 Number(
                     data.average_esg_score || 0
                 ).toFixed(1);
-
         }
-
 
         // Carbon Emission
 
@@ -109,13 +99,9 @@ async function loadDashboard() {
                 Number(
                     data.total_emission || 0
                 ).toFixed(2) + " kg";
-
         }
 
-
-  
         // Reports
-
 
         const reportCount =
             document.getElementById("reportCount");
@@ -124,37 +110,27 @@ async function loadDashboard() {
 
             reportCount.textContent =
                 data.total_reports || 0;
-
         }
 
-
-    
         // Header Company Name
 
         const headerCompanyName =
-            document.getElementById(
-                "headerCompanyName"
-            );
+            document.getElementById("headerCompanyName");
 
         if (headerCompanyName) {
 
             headerCompanyName.textContent =
                 data.company_name ||
                 "Company Account";
-
         }
 
-
-        // User Initial==
+        // User Initial
 
         const userInitial =
-            document.getElementById(
-                "userInitial"
-            );
+            document.getElementById("userInitial");
 
         const storedUser =
             localStorage.getItem("user");
-
 
         if (userInitial && storedUser) {
 
@@ -163,7 +139,6 @@ async function loadDashboard() {
                 const user =
                     JSON.parse(storedUser);
 
-
                 const name =
                     user.full_name ||
                     user.name ||
@@ -171,12 +146,10 @@ async function loadDashboard() {
                     user.email ||
                     "";
 
-
                 if (name) {
 
                     userInitial.textContent =
                         name.charAt(0).toUpperCase();
-
                 }
 
             } catch (error) {
@@ -185,22 +158,16 @@ async function loadDashboard() {
                     "Unable to read stored user:",
                     error
                 );
-
             }
-
         }
 
-
-    
         // Charts
 
         await loadCharts(token);
 
-
         // Recent Activity
 
         await loadRecentActivity(token);
-
 
     } catch (error) {
 
@@ -209,12 +176,8 @@ async function loadDashboard() {
             error
         );
 
-
         const errorBox =
-            document.getElementById(
-                "dashboardError"
-            );
-
+            document.getElementById("dashboardError");
 
         if (errorBox) {
 
@@ -222,9 +185,7 @@ async function loadDashboard() {
                 "Unable to load dashboard data. Please check that the Flask server is running.";
 
             errorBox.classList.remove("hidden");
-
         }
-
 
         const companyName =
             document.getElementById("companyName");
@@ -234,7 +195,6 @@ async function loadDashboard() {
                 "Unable to load";
         }
 
-
         const esgScore =
             document.getElementById("esgScore");
 
@@ -242,28 +202,20 @@ async function loadDashboard() {
             esgScore.textContent = "0";
         }
 
-
         const carbonEmission =
-            document.getElementById(
-                "carbonEmission"
-            );
+            document.getElementById("carbonEmission");
 
         if (carbonEmission) {
             carbonEmission.textContent = "0 kg";
         }
 
-
         const reportCount =
-            document.getElementById(
-                "reportCount"
-            );
+            document.getElementById("reportCount");
 
         if (reportCount) {
             reportCount.textContent = "0";
         }
-
     }
-
 }
 
 
@@ -273,22 +225,17 @@ async function loadCharts(token) {
 
     try {
 
-        
-
         const carbonResponse =
             await fetch(
-                `${API_URL}/carbon/`,
+                `${API}/carbon/`,
                 {
                     method: "GET",
                     headers: {
-                        "Content-Type":
-                            "application/json",
-                        "Authorization":
-                            `Bearer ${token}`
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
                     }
                 }
             );
-
 
         let carbonData = [];
 
@@ -302,32 +249,24 @@ async function loadCharts(token) {
                 carbonResult
             );
 
-
             if (carbonResult.success) {
 
                 carbonData =
                     carbonResult.data || [];
-
             }
-
         }
-
-
 
         const esgResponse =
             await fetch(
-                `${API_URL}/esg/`,
+                `${API}/esg/`,
                 {
                     method: "GET",
                     headers: {
-                        "Content-Type":
-                            "application/json",
-                        "Authorization":
-                            `Bearer ${token}`
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
                     }
                 }
             );
-
 
         let esgData = [];
 
@@ -341,21 +280,16 @@ async function loadCharts(token) {
                 esgResult
             );
 
-
             if (esgResult.success) {
 
                 esgData =
                     esgResult.data || [];
-
             }
-
         }
-
 
         createCarbonChart(carbonData);
 
         createESGChart(esgData);
-
 
     } catch (error) {
 
@@ -363,26 +297,20 @@ async function loadCharts(token) {
             "Chart loading failed:",
             error
         );
-
     }
-
 }
 
-// Carbon Chart
 
+// Carbon Chart
 
 function createCarbonChart(records) {
 
     const canvas =
-        document.getElementById(
-            "carbonChart"
-        );
-
+        document.getElementById("carbonChart");
 
     if (!canvas) {
         return;
     }
-
 
     const labels = records.map(
         item => {
@@ -398,10 +326,8 @@ function createCarbonChart(records) {
 
             return new Date(date)
                 .toLocaleDateString();
-
         }
     );
-
 
     const values = records.map(
         item =>
@@ -412,7 +338,6 @@ function createCarbonChart(records) {
                 0
             )
     );
-
 
     new Chart(
         canvas,
@@ -451,9 +376,7 @@ function createCarbonChart(records) {
             }
         }
     );
-
 }
-
 
 
 // ESG Chart
@@ -461,15 +384,11 @@ function createCarbonChart(records) {
 function createESGChart(records) {
 
     const canvas =
-        document.getElementById(
-            "esgChart"
-        );
-
+        document.getElementById("esgChart");
 
     if (!canvas) {
         return;
     }
-
 
     const labels = records.map(
         item => {
@@ -485,10 +404,8 @@ function createESGChart(records) {
 
             return new Date(date)
                 .toLocaleDateString();
-
         }
     );
-
 
     const values = records.map(
         item =>
@@ -499,7 +416,6 @@ function createESGChart(records) {
                 0
             )
     );
-
 
     new Chart(
         canvas,
@@ -540,7 +456,6 @@ function createESGChart(records) {
             }
         }
     );
-
 }
 
 
@@ -549,23 +464,17 @@ function createESGChart(records) {
 async function loadRecentActivity(token) {
 
     const table =
-        document.getElementById(
-            "activityTable"
-        );
-
+        document.getElementById("activityTable");
 
     if (!table) {
         return;
     }
 
-
     try {
-
-   
 
         const response =
             await fetch(
-                `${API_URL}/carbon/`,
+                `${API}/carbon/`,
                 {
                     method: "GET",
 
@@ -579,23 +488,18 @@ async function loadRecentActivity(token) {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
                 `HTTP ${response.status}`
             );
-
         }
-
 
         const result =
             await response.json();
 
-
         const records =
             result.data || [];
-
 
         if (!records.length) {
 
@@ -613,11 +517,8 @@ async function loadRecentActivity(token) {
             return;
         }
 
-
-
         const latest =
             records.slice(0, 5);
-
 
         table.innerHTML =
             latest.map(
@@ -628,21 +529,19 @@ async function loadRecentActivity(token) {
                         item.date ||
                         item.recorded_at;
 
-
                     const date =
                         dateValue
                             ? new Date(
                                 dateValue
-                              ).toLocaleDateString(
+                            ).toLocaleDateString(
                                 "en-GB",
                                 {
                                     day: "2-digit",
                                     month: "short",
                                     year: "numeric"
                                 }
-                              )
+                            )
                             : "-";
-
 
                     return `
                         <tr class="border-b">
@@ -667,24 +566,19 @@ async function loadRecentActivity(token) {
 
                         </tr>
                     `;
-
                 }
             ).join("");
-
 
         const activityStatus =
             document.getElementById(
                 "activityStatus"
             );
 
-
         if (activityStatus) {
 
             activityStatus.textContent =
                 `${latest.length} recent record(s)`;
-
         }
-
 
     } catch (error) {
 
@@ -692,7 +586,6 @@ async function loadRecentActivity(token) {
             "Activity loading failed:",
             error
         );
-
 
         table.innerHTML = `
             <tr>
@@ -704,9 +597,7 @@ async function loadRecentActivity(token) {
                 </td>
             </tr>
         `;
-
     }
-
 }
 
 
